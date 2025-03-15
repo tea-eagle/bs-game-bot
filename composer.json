@@ -1,0 +1,25 @@
+{
+    "minimum-stability": "dev",
+    "require": {
+        "telegram-bot-sdk/telegram-bot-sdk": "dev-main#ea127e1cdc8f9f1706d6eb5d6660c9f9eaa39df9",
+        "telegram-bot/api": "^2.5",
+        "php-di/php-di": "^7.0",
+        "symfony/yaml": "7.3.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Telegram\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/telegram-bot-sdk/telegram-bot-sdk"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "thecodingmachine/discovery": true
+        }
+    }
+}
