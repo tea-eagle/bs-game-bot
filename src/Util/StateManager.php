@@ -48,7 +48,6 @@ class StateManager
 
     public function getKey($chatId)
     {
-        save_log_out('stateKeyBefore: ' . $chatId);
         return $this->prefix . $chatId;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Telegram\Commands\Spirit;
+namespace App\Telegram\Commands\Forge;
 
 use Telegram\Bot\Api as TelegramClient;
 use Telegram\Bot\Objects\Update as TelegramUpdates;
@@ -8,10 +8,11 @@ use Telegram\Bot\Objects\ResponseObject;
 use Telegram\Bot\Objects\Keyboard\InlineKeyboardMarkup;
 use Telegram\Bot\Objects\Keyboard\InlineKeyboardButton;
 use App\Telegram\Util\StateManager;
-use App\Telegram\Commands\Spirit\Enums\SpiritList;
-use App\Telegram\Commands\Spirit\Enums\CoreList;
+use App\Telegram\Commands\Forge\Enums\ForgeList;
+use App\Telegram\Commands\Forge\Enums\ItemList;
+use App\Telegram\Commands\Forge\Calculate;
 
-class SecondCommand
+class ThirdCommand
 {
     public $telegram;
     public $stateManager;
@@ -44,44 +45,35 @@ class SecondCommand
 
         $state = $this->stateManager->getState($chatId);
 
-        // Формируем кнопки
-        $reply_markup = InlineKeyboardMarkup::make();
+        $item = ItemList::tryFrom($callbackData);
 
-        // Формируем кнопки ядер
-        $cors = CoreList::cases();
-        foreach ($cors as $key => $core) {
-            $reply_markup->row(
-                InlineKeyboardButton::make([
-                    'text' => $core->label(),
-                    'callback_data' => $core->value,
-                ])
-            );
-        }
-
-        $spirit = SpiritList::tryFrom($callbackData);
-
-        if (!$spirit) {
+        if (!$item) {
             return;
         }
 
-        // подготовка ответа и отправка
-        $replyText = '👻 <b>Калькулятор духов</b>' . "\r\n\r\n";
-        $replyText = '👻 <b>Дух: </b>' . $spirit->label() . "\r\n\r\n";
-
-        $replyText .= 'Выберите ядро';
-
-        $state['current_step'] = 'calculate_result';
-        $state['current_page'] = 1;
-        $state['data']['spirit'] = $callbackData;
-
+        // обновляю state
+        $state['data']['item'] = $callbackData;
         $this->stateManager->setState($chatId, $state);
 
-        $result = $this->telegram->sendMessage(array_filter([
+        // подготовка ответа и отправка
+        $replyText = '⚒ <b>Калькулятор ковки</b>' . "\r\n\r\n";
+        $replyText .= '<b>Уровень ковки: </b>' . $state['data']['level'] . "\r\n";
+        $replyText .= '<b>Тип предмета: </b>' . $item->label() . "\r\n";
+
+        $calculator = CONTAINER->get(Calculate::class);
+        $result = $calculator->calculate($chatId);
+
+        $replyText .= '➡ Стоимость ковки в сумме: <b>' . $result['forge_sum'] . "</b>\r\n";
+        $replyText .= '➡ Стоимость ковки золотых: <b>' . $result['amount'] . "</b>\r\n";
+        $replyText .= '➡ Количество предметов: <b>' . $result['count_items'] . '</b>';
+
+        $resultSend = $this->telegram->sendMessage(array_filter([
             'chat_id' => $chatId,
             'text' => $replyText,
-            'reply_markup' => $reply_markup,
             'message_thread_id' => $chatThreadId ? $chatThreadId : null,
             'parse_mode' => 'HTML',
         ]));
+
+        $this->stateManager->clearState($chatId);
     }
 }

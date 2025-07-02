@@ -22,6 +22,10 @@ use App\Telegram\Commands\Spirit\UnknownCommand as SpiritUnknownCommand;
 use App\Telegram\Commands\Spirit\SecondCommand as SpiritSecondCommand;
 use App\Telegram\Commands\Spirit\ThirthCommand as SpiritThirthCommand;
 
+use App\Telegram\Commands\Forge\UnknownCommand as ForgeUnknownCommand;
+use App\Telegram\Commands\Forge\SecondCommand as ForgeSecondCommand;
+use App\Telegram\Commands\Forge\ThirdCommand as ForgeThirdCommand;
+
 use App\Telegram\Enums\CalculatorDirection;
 use App\Telegram\Enums\SpiritCalculatorAction;
 
@@ -188,6 +192,15 @@ class BotHandler
                     'updates' => $updates,
                 ]),
                 default => CONTAINER->get(SpiritUnknownCommand::class),
+            },
+            '/forge' => match ($command) {
+                'choose_level' => CONTAINER->get(ForgeSecondCommand::class, [
+                    'updates' => $updates,
+                ]),
+                'choose_item' => CONTAINER->get(ForgeThirdCommand::class, [
+                    'updates' => $updates,
+                ]),
+                default => CONTAINER->get(ForgeUnknownCommand::class),
             },
             default => CONTAINER->get(UnknownCommand::class),
         };
