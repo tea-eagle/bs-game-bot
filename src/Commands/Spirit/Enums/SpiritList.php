@@ -98,7 +98,7 @@ enum SpiritList: string
             self::VENGEFUL_CHARIONNE         => 67762,
             self::WISDOM_MIMIR               => 71671,
             self::JUSTICE_RAIT               => 75580,
-            self::GABRIELLA                  => 75580,
+            self::GABRIELLA                  => 79489,
         };
     }
 
