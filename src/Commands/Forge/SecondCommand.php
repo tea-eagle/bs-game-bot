@@ -32,6 +32,8 @@ class SecondCommand
         $isForum = $messageData['message']['chat']['is_forum'] ?? false;
         $chatThreadId = $isForum ? $messageData['message']['message_thread_id'] : null;
         $callbackData = isset($updates['callback_query']) ? $updates['callback_query']['data'] : null;
+        $forgeLevelFrom = null;
+        $forgeLevelTo = null;
 
         // удаляю сообщение
         try {
@@ -46,12 +48,38 @@ class SecondCommand
         $state = $this->stateManager->getState($chatId);
         $forgeMaxLevel = max(array_map(fn($case) => $case->value, ForgeList::cases()));
 
-        $forgeLevel = (int) $messageText;
-
-        $forge = ForgeList::tryFrom($forgeLevel);
-
-        if (!$forge) {
+        $forgeLevels = explode(' ', $messageText);
+        if (count($forgeLevels) === 1) {
+            $forgeLevelTo = (int) $forgeLevels[0];
+        } else if (count($forgeLevels) === 2) {
+            $forgeLevelFrom = (int) $forgeLevels[0];
+            $forgeLevelTo = (int) $forgeLevels[1];
+        } else {
             return;
+        }
+
+        if (!is_null($forgeLevelFrom)) {
+            $forgeFrom = ForgeList::tryFrom($forgeLevelFrom);
+
+            if (!$forgeFrom) {
+                return;
+            }
+        }
+
+        if ($forgeLevelTo === 0) {
+            return;
+        }
+
+        $forgeTo = ForgeList::tryFrom($forgeLevelTo);
+
+        if (!$forgeTo) {
+            return;
+        }
+
+        if (!is_null($forgeLevelFrom)) {
+            if ($forgeLevelFrom > $forgeTo) {
+                return;
+            }
         }
 
         if (isset($state['toDeleteMessages']) && $state['toDeleteMessages']) {
@@ -70,7 +98,10 @@ class SecondCommand
         }
 
         // обновляю state
-        $state['data']['level'] = $forgeLevel;
+        if (!is_null($forgeLevelFrom)) {
+            $state['data']['level_from'] = $forgeLevelFrom;
+        }
+        $state['data']['level_to'] = $forgeLevelTo;
         $state['current_step'] = 'choose_item';
         $this->stateManager->setState($chatId, $state);
 

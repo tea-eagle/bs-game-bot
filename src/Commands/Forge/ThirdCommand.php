@@ -57,7 +57,11 @@ class ThirdCommand
 
         // подготовка ответа и отправка
         $replyText = '⚒ <b>Калькулятор ковки</b>' . "\r\n\r\n";
-        $replyText .= '<b>Уровень ковки: </b>' . $state['data']['level'] . "\r\n";
+        $replyText .= '<b>Уровень ковки: </b>';
+        if (isset($state['data']['level_from']) && $state['data']['level_from']) {
+            $replyText .= ' с ' . $state['data']['level_from'] . ' по ';
+        }
+        $replyText .= $state['data']['level_to'] . "\r\n";
         $replyText .= '<b>Тип предмета: </b>' . $item->label() . "\r\n";
 
         $calculator = CONTAINER->get(Calculate::class);

@@ -55,7 +55,12 @@ class UnknownCommand
 
         // подготовка ответа и отправка
         $replyText = '⚒ <b>Калькулятор ковки</b>' . "\r\n\r\n";
-        $replyText .= 'Отправьте число от 1 до ' . $forgeMaxLevel . ' до какого уровня сделать расчёт';
+        $replyText .= 'Отправьте <i>одно число</i> от <b>1</b> до <b>';
+        $replyText .= $forgeMaxLevel;
+        $replyText .= '</b> до какого уровня сделать расчёт. Например:' . "\r\n";
+        $replyText .= '<code>20</code>' . "\r\n\r\n";
+        $replyText .= 'Или <i>два числа</i> через пробел от какого и до какого уровня сделать расчёт. Например:' . "\r\n";
+        $replyText .= '<code>10 20</code>';
 
         $state['current_step'] = 'choose_level';
 

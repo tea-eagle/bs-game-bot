@@ -22,7 +22,10 @@ class Calculate
     public function calculate($chatId)
     {
         $state = $this->stateManager->getState($chatId);
-        $targetLevel = (int) $state['data']['level'];
+        $targetLevelFrom = isset($state['data']['level_from']) && $state['data']['level_from']
+            ? (int) $state['data']['level_from']
+            : null;
+        $targetLevelTo = (int) $state['data']['level_to'];
 
         $item = ItemList::tryFrom($state['data']['item']);
         $itemCost = $item->cost();
@@ -35,7 +38,11 @@ class Calculate
         $remainingItemValue = 0;
 
         foreach ($forgeLevels as $levelIndex => $forgeLevel) {
-            if ($levelIndex === $targetLevel) {
+            if (!is_null($targetLevelFrom) && $targetLevelFrom > $levelIndex) {
+                continue;
+            }
+
+            if ($levelIndex === $targetLevelTo) {
                 break;
             }
 
