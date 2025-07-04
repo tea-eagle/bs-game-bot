@@ -67,8 +67,18 @@ class ThirdCommand
         $calculator = CONTAINER->get(Calculate::class);
         $result = $calculator->calculate($chatId);
 
-        $replyText .= '➡ Стоимость ковки в сумме: <b>' . $result['forge_sum'] . "</b>\r\n";
-        $replyText .= '➡ Стоимость ковки золотых: <b>' . $result['amount'] . "</b>\r\n";
+        $forgeAmount = explode('.', $result['amount']);
+        $forgeAmountGold = $forgeAmount[0];
+        $forgeAmountSilver = (isset($forgeAmount[1]) && $forgeAmount[1])
+            ? str_pad($forgeAmount[1], 4, '0')
+            : null;
+
+        $replyText .= '➡ Цена ковки: <b>';
+        $replyText .= $forgeAmountGold . '</b> золота';
+        if (!is_null($forgeAmountSilver)) {
+            $replyText .= ' <b>' . $forgeAmountSilver . '</b> серебра';
+        }
+        $replyText .= "\r\n";
         $replyText .= '➡ Количество предметов: <b>' . $result['count_items'] . '</b>';
 
         $resultSend = $this->telegram->sendMessage(array_filter([
@@ -79,5 +89,14 @@ class ThirdCommand
         ]));
 
         $this->stateManager->clearState($chatId);
+    }
+
+    private function formatSilver($value)
+    {
+        $length = strlen((string) $value);
+        if ($length < 4) {
+            $value *= pow(10, 4 - $length);
+        }
+        return $value;
     }
 }
