@@ -73,13 +73,14 @@ class ThirdCommand
             ? str_pad($forgeAmount[1], 4, '0')
             : null;
 
-        $replyText .= '➡ Цена ковки: <b>';
+        $replyText .= '➡ Цена ковки*: <b>';
         $replyText .= $forgeAmountGold . '</b> золота';
         if (!is_null($forgeAmountSilver)) {
             $replyText .= ' <b>' . $forgeAmountSilver . '</b> серебра';
         }
         $replyText .= "\r\n";
-        $replyText .= '➡ Количество предметов: <b>' . $result['count_items'] . '</b>';
+        $replyText .= '➡ Количество предметов: <b>' . $result['count_items'] . '</b>' . "\r\n\r\n";
+        $replyText .= "<i>* В цену ковки не входит стоимость приобретения предметов</i>";
 
         $resultSend = $this->telegram->sendMessage(array_filter([
             'chat_id' => $chatId,
