@@ -30,18 +30,18 @@ enum ForgeList: int
     case LEVEL_23  = 23;
     case LEVEL_24  = 24;
     case LEVEL_25  = 25;
-    // case LEVEL_26  = 26;
-    // case LEVEL_27  = 27;
-    // case LEVEL_28  = 28;
-    // case LEVEL_29  = 29;
-    // case LEVEL_30  = 30;
-    // case LEVEL_31  = 31;
-    // case LEVEL_32  = 32;
-    // case LEVEL_33  = 33;
-    // case LEVEL_34  = 34;
-    // case LEVEL_35  = 35;
-    // case LEVEL_36  = 36;
-    // case LEVEL_37  = 37;
+    case LEVEL_26  = 26;
+    case LEVEL_27  = 27;
+    case LEVEL_28  = 28;
+    case LEVEL_29  = 29;
+    case LEVEL_30  = 30;
+    case LEVEL_31  = 31;
+    case LEVEL_32  = 32;
+    case LEVEL_33  = 33;
+    case LEVEL_34  = 34;
+    case LEVEL_35  = 35;
+    case LEVEL_36  = 36;
+    case LEVEL_37  = 37;
     // case LEVEL_38  = 38;
     // case LEVEL_39  = 39;
     // case LEVEL_40  = 40;
@@ -74,9 +74,9 @@ enum ForgeList: int
             self::LEVEL_23  => ['cost' => 18360, 'price' => 53.1],
             self::LEVEL_24  => ['cost' => 19875, 'price' => 55.5],
             self::LEVEL_25  => ['cost' => 21450, 'price' => 58],
-            self::LEVEL_26  => ['cost' => 0,     'price' => 0],
-            self::LEVEL_27  => ['cost' => 24780, 'price' => 0],
-            self::LEVEL_28  => ['cost' => 26535, 'price' => 0],
+            self::LEVEL_26  => ['cost' => 23085, 'price' => 60.6],
+            self::LEVEL_27  => ['cost' => 24780, 'price' => 63.3],
+            self::LEVEL_28  => ['cost' => 26535, 'price' => 66.1],
             self::LEVEL_29  => ['cost' => 28350, 'price' => 69],
             self::LEVEL_30  => ['cost' => 28350, 'price' => 69],
             self::LEVEL_31  => ['cost' => 30225, 'price' => 72],
