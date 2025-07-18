@@ -67,11 +67,11 @@ class FourthCommand
         switch ($callbackData) {
             case 'usual_ability_rune':
                 $runeStep = 30;
-                $runeName = '🔵 Обычная руна способностей (+30)';
+                $runeName = '🔵 Обычная руна способностей (-30)';
                 break;
             case 'special_ability_rune':
                 $runeStep = 50;
-                $runeName = '🟣 Особая руна способностей (+50)';
+                $runeName = '🟣 Особая руна способностей (-50)';
                 break;
             default:
                 $runeStep = null;

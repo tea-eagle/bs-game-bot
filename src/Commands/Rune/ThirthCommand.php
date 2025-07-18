@@ -126,13 +126,13 @@ class ThirthCommand
         $reply_markup = InlineKeyboardMarkup::make()
                 ->row(
                     InlineKeyboardButton::make([
-                        'text' => '🔵 Обычная руна способностей (+30)',
+                        'text' => '🔵 Обычная руна способностей (-30)',
                         'callback_data' => 'usual_ability_rune',
                     ])
                 )
                 ->row(
                     InlineKeyboardButton::make([
-                        'text' => '🟣 Особая руна способностей (+50)',
+                        'text' => '🟣 Особая руна способностей (-50)',
                         'callback_data' => 'special_ability_rune',
                     ])
                 );
