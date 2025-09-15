@@ -42,9 +42,9 @@ enum ForgeList: int
     case LEVEL_35  = 35;
     case LEVEL_36  = 36;
     case LEVEL_37  = 37;
-    // case LEVEL_38  = 38;
-    // case LEVEL_39  = 39;
-    // case LEVEL_40  = 40;
+    case LEVEL_38  = 38;
+    case LEVEL_39  = 39;
+    case LEVEL_40  = 40;
 
     public function data(): array {
         return match ($this) {
@@ -85,9 +85,9 @@ enum ForgeList: int
             self::LEVEL_34  => ['cost' => 36210, 'price' => 81.6],
             self::LEVEL_35  => ['cost' => 38325, 'price' => 85],
             self::LEVEL_36  => ['cost' => 40500, 'price' => 88.5],
-            self::LEVEL_37  => ['cost' => 0,     'price' => 0],
-            self::LEVEL_38  => ['cost' => 0,     'price' => 0],
-            self::LEVEL_39  => ['cost' => 0,     'price' => 0],
+            self::LEVEL_37  => ['cost' => 42735, 'price' => 92.1],
+            self::LEVEL_38  => ['cost' => 45030, 'price' => 95.8],
+            self::LEVEL_39  => ['cost' => 47385, 'price' => 99.6],
             self::LEVEL_40  => ['cost' => 0,     'price' => 0],
         };
     }
