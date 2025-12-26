@@ -68,7 +68,7 @@ class Calculate
                 $itemCount++;
 
                 // Добавляем цену предмета в золоте по текущему уровню
-                $totalGoldPrice += $forgeData['price'];
+                $totalGoldPrice = bcadd($totalGoldPrice, $forgeData['price'], 4);
 
                 if ($itemCost >= $currentForgeCost) {
                     $remainingItemValue = $itemCost - $currentForgeCost;
