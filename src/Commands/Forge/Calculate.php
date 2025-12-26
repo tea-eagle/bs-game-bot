@@ -7,6 +7,7 @@ use App\Telegram\Util\StateManager;
 
 use App\Telegram\Commands\Forge\Enums\ForgeList;
 use App\Telegram\Commands\Forge\Enums\ItemList;
+use App\Telegram\Commands\Forge\Enums\ItemType;
 
 class Calculate
 {
@@ -81,10 +82,28 @@ class Calculate
             }
         }
 
+        $feels = [];
+
+        foreach (ItemType::cases() as $type) {
+            $feels[$type->label()] = $this->calcFeel($itemCount, $type);
+        }
+
         return [
             'amount'      => $totalGoldPrice,
             'forge_sum'   => $totalForgeCost,
             'count_items' => $itemCount,
+            'feels'       => $feels,
         ];
+    }
+
+    private function calcFeel(int $itemCount, ItemType $type): array
+    {
+        $itemsOfStack = 9999;
+        $countItems = $itemCount * $type->cost();
+
+        $fullStacks = intdiv($countItems, $itemsOfStack);
+        $rest = $countItems % $itemsOfStack;
+
+        return [$fullStacks, $rest];
     }
 }

@@ -55,14 +55,14 @@ class ThirdCommand
         $state['data']['item'] = $callbackData;
         $this->stateManager->setState($chatId, $state);
 
-        // подготовка ответа и отправка
         $replyText = '⚒ <b>Калькулятор ковки</b>' . "\r\n\r\n";
-        $replyText .= '<b>Уровень ковки: </b>';
-        if (isset($state['data']['level_from']) && $state['data']['level_from']) {
-            $replyText .= ' с ' . $state['data']['level_from'] . ' по ';
-        }
-        $replyText .= $state['data']['level_to'] . "\r\n";
-        $replyText .= '<b>Тип предмета: </b>' . $item->label() . "\r\n";
+        $replyText .= '📈';
+        $levelFrom = (isset($state['data']['level_from']) && $state['data']['level_from'])
+            ? $state['data']['level_from']
+            : 0;
+        $replyText .= ' с ' . $levelFrom . ' по ';
+        $replyText .= $state['data']['level_to'] . " уровень\r\n";
+        $replyText .= $item->label() . "\r\n\r\n";
 
         $calculator = CONTAINER->get(Calculate::class);
         $result = $calculator->calculate($chatId);
@@ -73,14 +73,25 @@ class ThirdCommand
             ? str_pad($forgeAmount[1], 4, '0')
             : null;
 
-        $replyText .= '➡ Цена ковки*: <b>';
-        $replyText .= $forgeAmountGold . '</b> золота';
+        $replyText .= '💰 <b>' . $forgeAmountGold . '</b> золота';
         if (!is_null($forgeAmountSilver)) {
             $replyText .= ' <b>' . $forgeAmountSilver . '</b> серебра';
         }
         $replyText .= "\r\n";
-        $replyText .= '➡ Количество предметов: <b>' . $result['count_items'] . '</b>' . "\r\n\r\n";
-        $replyText .= "<i>* В цену ковки не входит стоимость приобретения предметов</i>";
+        $replyText .= '📦 <b>' . $result['count_items'] . '</b> предметов' . "\r\n";
+        $replyText .= '⭐ <b>' . $result['forge_sum'] . '</b> очков ковки' . "\r\n\r\n";
+        if ($item === ItemList::PURPLE && isset($result['feels']) && !empty($result['feels'])) {
+            $replyText .= '🧿 Божественные чувства' . "\r\n";
+            $replyText .= '<tg-spoiler>';
+            foreach ($result['feels'] as $type => $feel) {
+                $replyText .= $type . ' <b>' . $feel[0] . '</b> стеков';
+                if ($feel[1] > 0) {
+                    $replyText .= ' и <b>' . $feel[1] . '</b> шт.';
+                }
+                $replyText .= " бож. чувства\r\n";
+            }
+            $replyText .= '</tg-spoiler>';
+        }
 
         $resultSend = $this->telegram->sendMessage(array_filter([
             'chat_id' => $chatId,
