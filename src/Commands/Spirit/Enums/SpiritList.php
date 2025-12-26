@@ -33,6 +33,7 @@ enum SpiritList: string
     case WISDOM_MIMIR               = 'spirit_27';
     case JUSTICE_RAIT               = 'spirit_28';
     case GABRIELLA                  = 'spirit_29';
+    case ARES                       = 'spirit_30';
 
     public function label(): string {
         return match ($this) {
@@ -65,6 +66,7 @@ enum SpiritList: string
             self::WISDOM_MIMIR               => 'Дух мудрости Мимир',
             self::JUSTICE_RAIT               => 'Дух правосудия Райт',
             self::GABRIELLA                  => 'Святой дух Габриэлла',
+            self::ARES                       => 'Свирепый дух Арес',
         };
     }
 
@@ -99,6 +101,7 @@ enum SpiritList: string
             self::WISDOM_MIMIR               => 71671,
             self::JUSTICE_RAIT               => 75580,
             self::GABRIELLA                  => 79489,
+            self::ARES                       => 83398,
         };
     }
 
@@ -133,6 +136,7 @@ enum SpiritList: string
             self::WISDOM_MIMIR               => 219,
             self::JUSTICE_RAIT               => 219,
             self::GABRIELLA                  => 219,
+            self::ARES                       => 219,
         };
     }
 }
