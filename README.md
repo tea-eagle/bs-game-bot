@@ -36,7 +36,13 @@ git clone https://github.com/tea-eagle/bs-game-bot.git
 cd bs-game-bot
 ```
 
-### 2. Создать конфигурацию
+### 2. Установить зависимости
+
+```bash
+composer install
+```
+
+### 3. Создать конфигурацию
 
 ```bash
 cp config/example-main.yaml config/main.yaml
@@ -53,7 +59,7 @@ cp config/example-main.yaml config/main.yaml
 - room — ID темы (topic/thread в Telegram форумах)
 - databases.mysql — настройки подключения к БД
 
-### 3. Настроить базу данных
+### 4. Настроить базу данных
 
 ```sql
 CREATE TABLE IF NOT EXISTS `bs_tg_bot` (
@@ -68,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `bs_tg_bot` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
-### 4. Настроить webhook
+### 5. Настроить webhook
 
 ```bash
 https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://YOUR_DOMAIN/YOUR_PROJECT_DIRECTORY/
