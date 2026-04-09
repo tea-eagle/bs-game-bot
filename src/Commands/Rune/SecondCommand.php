@@ -7,19 +7,16 @@ use Telegram\Bot\Objects\Update as TelegramUpdates;
 use Telegram\Bot\Objects\ResponseObject;
 use Telegram\Bot\Objects\Keyboard\InlineKeyboardMarkup;
 use Telegram\Bot\Objects\Keyboard\InlineKeyboardButton;
-use App\Telegram\Cache\RedisCache;
 use App\Telegram\Util\StateManager;
 
 class SecondCommand
 {
     public $telegram;
-    public $cache;
     public $stateManager;
 
-    public function __construct(TelegramClient $telegram, RedisCache $cache, StateManager $stateManager)
+    public function __construct(TelegramClient $telegram, StateManager $stateManager)
     {
         $this->telegram = $telegram;
-        $this->cache = $cache;
         $this->stateManager = $stateManager;
     }
 

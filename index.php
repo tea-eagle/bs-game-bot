@@ -16,6 +16,7 @@ use DI\ContainerBuilder;
 use App\Telegram\Util\Container;
 use App\Telegram\Cache\Cache;
 use App\Telegram\Cache\RedisCache;
+use App\Telegram\Database\MySql;
 
 use Telegram\Bot\Api as TelegramClient;
 use Telegram\Bot\Keyboard\Keyboard;
@@ -36,6 +37,10 @@ $config = Yaml::parseFile(__DIR__ . '/config/main.yaml');
 
 $container->set('config.bot_token', $config['telegram']['bot_token']);
 $container->set('config.defined_forum_themes', $config['defined_forum_themes']);
+$container->set('config.mysql.host', $config['databases']['mysql']['host']);
+$container->set('config.mysql.user', $config['databases']['mysql']['user']);
+$container->set('config.mysql.password', $config['databases']['mysql']['password']);
+$container->set('config.mysql.dbname', $config['databases']['mysql']['dbname']);
 
 // Загружаем `dependencies.php`, если он есть
 $dependenciesFile = __DIR__ . '/dependencies.php';

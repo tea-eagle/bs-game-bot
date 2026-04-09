@@ -6,7 +6,6 @@ use Telegram\Bot\Api as TelegramClient;
 use Telegram\Bot\Objects\Update as TelegramUpdates;
 use Telegram\Bot\Objects\ResponseObject;
 use Telegram\Bot\Objects\Keyboard\InlineKeyboardMarkup;
-use App\Telegram\Cache\RedisCache;
 use App\Telegram\Util\StateManager;
 
 use App\Telegram\Commands\UnknownCommand;
@@ -33,13 +32,11 @@ class BotHandler
 {
 	private $telegram;
     private $updates;
-    private $cache;
     protected StateManager $stateManager;
 
-    public function __construct(TelegramClient $telegram, RedisCache $cache)
+    public function __construct(TelegramClient $telegram)
     {
         $this->telegram = $telegram;
-        $this->cache = $cache;
         $this->stateManager = CONTAINER->get(StateManager::class);
     }
 
@@ -53,6 +50,7 @@ class BotHandler
     public function handle() {
         $updates = $this->getUpdates();
         $chatId = $updates['message']['chat']['id'] ?? $updates['callback_query']['message']['chat']['id'];
+
         if ($this->checkChat($updates)) {
             $command = $this->getCommand($updates);
             $this->executeCommand($command, $updates, $chatId);

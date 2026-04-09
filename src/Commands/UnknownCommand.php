@@ -7,17 +7,14 @@ use Telegram\Bot\Objects\Update as TelegramUpdates;
 use Telegram\Bot\Objects\ResponseObject;
 use Telegram\Bot\Objects\Keyboard\InlineKeyboardMarkup;
 use Telegram\Bot\Objects\Keyboard\InlineKeyboardButton;
-use App\Telegram\Cache\RedisCache;
 
 class UnknownCommand
 {
-    public $telegram;
-    public $cache;
+    public TelegramClient $telegram;
 
-    public function __construct(TelegramClient $telegram, RedisCache $cache)
+    public function __construct(TelegramClient $telegram)
     {
         $this->telegram = $telegram;
-        $this->cache = $cache;
     }
 
     public function execute(ResponseObject $updates) {
@@ -40,7 +37,7 @@ class UnknownCommand
         $this->telegram->sendMessage(array_filter([
             'chat_id' => $chatId,
             'text' => $replyText,
-            'reply_markup' => $reply_markup,
+            'reply_markup' => $replyText,
             'message_thread_id' => $chatThreadId ? $chatThreadId : null,
             'parse_mode' => 'html',
         ]));

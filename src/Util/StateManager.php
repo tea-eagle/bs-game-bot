@@ -3,13 +3,15 @@
 namespace App\Telegram\Util;
 
 use App\Telegram\Cache\RedisCache;
+use App\Telegram\Cache\DbCache;
+use App\Telegram\Cache\Cache;
 
 class StateManager
 {
-    protected RedisCache $cache;
+    protected Cache $cache;
     protected string $prefix = 'user_state:';
 
-    public function __construct(RedisCache $cache)
+    public function __construct(DbCache $cache)
     {
         $this->cache = $cache;
     }
