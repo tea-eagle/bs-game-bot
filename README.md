@@ -36,8 +36,8 @@ cp config/example-main.yaml config/main.yaml
 
 Отредактировать файл `config/main.yaml`:
 
-> ⚠️ При использовании в качестве кеша Redis блок databases не нужен
-> ⚠️ defined_forum_themes нужен только для группы с топиками, чтобы бот отвечал в конкретный топик
+> ⚠️ При использовании в качестве кеша Redis блок databases не нужен  
+> ⚠️ defined_forum_themes нужен только для группы с топиками, чтобы бот отвечал в конкретный топик  
 
 Пояснения:
 - bot_token — токен Telegram-бота
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `bs_tg_bot` (
 https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://YOUR_DOMAIN/YOUR_PROJECT_DIRECTORY/
 ```
 Замените:
-> YOUR_DOMAIN — на ваш домен
-> YOUR_PROJECT_DIRECTORY — на директорию, где размещён проект (если не в корне сайта)
+> YOUR_DOMAIN — на ваш домен  
+> YOUR_PROJECT_DIRECTORY — на директорию, где размещён проект (если не в корне сайта)  
 
 ---
 
