@@ -73,11 +73,12 @@ class ThirdCommand
             ? str_pad($forgeAmount[1], 4, '0')
             : null;
 
-        $replyText .= '💰 <b>' . $forgeAmountGold . '</b> золота';
-        if (!is_null($forgeAmountSilver)) {
-            $replyText .= ' <b>' . $forgeAmountSilver . '</b> серебра';
-        }
-        $replyText .= "\r\n";
+        // $replyText .= '💰 <b>' . $forgeAmountGold . '</b> золота';
+        // if (!is_null($forgeAmountSilver)) {
+        //     $replyText .= ' <b>' . $forgeAmountSilver . '</b> серебра';
+        // }
+        // $replyText .= "\r\n";
+
         $replyText .= '📦 <b>' . $result['count_items'] . '</b> предметов' . "\r\n";
         $replyText .= '⭐ <b>' . $result['forge_sum'] . '</b> очков ковки' . "\r\n\r\n";
         if ($item === ItemList::PURPLE && isset($result['feels']) && !empty($result['feels'])) {
