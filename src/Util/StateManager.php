@@ -31,7 +31,7 @@ class StateManager
 
     public function clearState(int $chatId): void
     {
-        $this->cache->delete([$this->getKey($chatId)]);
+        $this->cache->delete($this->getKey($chatId));
     }
 
     public function addToState($chatId, $key, $value)

@@ -58,7 +58,7 @@ class DbCache extends Cache
 
         $stmt = $conn->prepare("
             UPDATE telegram_bot
-            SET `active` = 0
+            SET `active` = 0, `json` = null
             WHERE `user` = ?
         ");
         $stmt->bind_param("s", $key);
